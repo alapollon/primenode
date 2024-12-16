@@ -1,17 +1,30 @@
-import { Controller, Get, Post } from '@nestjs/common';
-import { AppService } from './app.service';
+import { Controller, Get, Post, Body, Param, UploadedFile, UseInterceptors, UseGuards } from '@nestjs/common';
+import AppService from './app.service';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { AuthGuard } from '@nestjs/passport';
 
-@Controller()
-export class AppController {
+
+@Controller('app')
+@UseGuards(AuthGuard('oauth2'))
+export class ApplicationsController {
   constructor(private readonly appService: AppService) {}
 
-  @Get()
-  getHello(): string {
-    return this.appService.getHello();
+  @Get(':id')
+  findOne(@Param('id') id: string) {
+    return this.appService.findOnelink(id);
   }
-  @Get('mac-address') 
-  getMacAddress(): string {
-    return 'client MAC address';
+
+  @Post()
+  create(@Body() createRouteDto: any) {
+    return this.appService.createRoute(createRouteDto);
   }
+
   
+  @Post('upload')
+  @UseInterceptors(FileInterceptor('file'))
+  uploadFile(@UploadedFile() file: Express.Multer.File): void {
+    console.log('uploading' + file);
+      AppService.
+  }
+
 }
