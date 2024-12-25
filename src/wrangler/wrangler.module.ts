@@ -1,19 +1,20 @@
 import { Module } from '@nestjs/common';
 import { WranglerService } from './wrangler.service';
 import { WranglerController } from './wrangler.controller';
-import { PrismaService } from 'src/prisma.service';
-
 import { GraphQLFactory, GraphQLModule } from '@nestjs/graphql'
 import { join } from 'path';
+import { PrismaClient } from '@prisma/client';
 
+/**
+ * 
+ * This module polymorphs a content delivery network 
+ * manager 
+ */
 @Module({
-  imports: [
-    GraphQLModule.forRoot<ApolloDriverConfig>({
-    driver: ApolloDriver, // Use ApolloDriver for Apollo Server integration
-    autoSchemaFile: join(process.cwd(), 'src/schema.gql'), // Automatically generate GraphQL schema file
-  }),],
-  providers: [WranglerService, PrismaService],
-  controllers: [WranglerController, GraphQLModule],
+  imports: [PrismaClient, GraphQLModule],
+    
+  providers: [WranglerService],
+  controllers: [WranglerController],
   exports: [WranglerService, GraphQLFactory],
 })
 export class WranglerModule {}

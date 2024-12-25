@@ -1,41 +1,16 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Column, Entity,  } from "typeorm";
 
-/*
- * this class property material is for pos blockchain automations,
- * social platform interactivity and end-point intelligence 
- * 
- */
-
-@Entity()
-export class Clientele {
-    // fix 
-    @PrimaryGeneratedColumn('uuid')
-    id: string;
-
-    @Column()
+export default class ClienteleRecord {
+    @Column
     macaddress: string;
 
-    @Column()
-    name: string;
+    @Column
+    IPorigin: string;
 
-    @Column()
-    email: string;
+    @Column
+    IPdestination: string;
 
-    @Column()
-    phoneNumber: string;
-
-    @Column()
-    landingurl: string;
-
-    @Column()
-    linkedinurl: string; 
-
-    @Column()
-    xdoturl: string; 
-
-    @Column()
-    advertisementIdentity: string;
-
-
-
+    @Column 
+    locationOrigin: string; 
+    
 }

@@ -11,11 +11,11 @@ import { Repository } from 'typeorm';
 import { v4 as uuidv4 } from 'uuid';
 import { RouteInput } from './dto/create-route.input.ts';
 import { Route } from './dto/routes.entity';
-import { Clientele } from './dto/clientele.entity';
+import join from 'path'
 
 
 @Injectable()
-export default class ServerApplicationServices {
+export default class ServerServices {
   constructor(
     // locality  
     @InjectRepository(Route)

@@ -1,7 +1,7 @@
 import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
 
 
-export class UsersActivity{
+export class UsersActivityRecord{
     @Column()
     who: string;
 

@@ -2,9 +2,9 @@ import { Injectable, CanActivate, ExecutionContext, UnauthorizedException } from
 import { GqlExecutionContext } from '@nestjs/graphql';
 import { Observable } from 'rxjs';
 import { verify } from 'jsonwebtoken'; // Assuming JWT is used for SSO
-
+import { AuthModule } from './auth/auth.module';
 @Injectable()
-export class AuthGuard implements CanActivate {
+export class AuthGuard implements AuthModule {
   canActivate(
     context: ExecutionContext,
   ): boolean | Promise<boolean> | Observable<boolean> {
