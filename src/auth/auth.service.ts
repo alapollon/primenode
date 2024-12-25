@@ -14,4 +14,4 @@ export class AuthService extends PassportStrategy(Strategy, 'oauth2') {
     });
   }
 
-  
+}

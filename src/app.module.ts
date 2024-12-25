@@ -1,23 +1,25 @@
-import { Module } from '@nestjs/common';
-import { AppService } from './app.service';
+import { Module, MiddlewareConsumer } from '@nestjs/common';
+import { LoggerMiddleware } from './logger.middleware';
+import { ApplicationsController } from './app.controller';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
-
-
-import { AdminModule } from './admin/admin.module' 
-import { BlockbankModule } from './blockbank/blockbank.module';
-import { WranglerModule } from './wrangler/wrangler.module';
-import {  Route } from './dto/routes.entity';
+import { AdminController } from './admin/admin.controller';
+import { BlockbankController } from './blockbank.controller';
+import { WranglerController } from './wrangler.controller';
+import { ServerApplicationServices } from './app.service';
+import { ClientController } from './app.controller';
+import { AdminModule } from './admin.module';
+import { BlockbankModule } from './blockbank.module';
+import { BlockbankService } from './blockbank.service';
 import { join } from 'path';
 
-import { AppController  } from './app.controller';
-import { WranglerController } from './wrangler/wrangler.controller';
-import { AdminController } from './admin/admin.controller';
-import { BlockbankController } from './blockbank/blockbank.controller';
-import { BlockbankService } from './blockbank/blockbank.service';
 import WranglerService from './wrangler/wrangler.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Clientele } from './dto/clientel.entity';
+import { Clientele } from './dto/clientele.entity';
+import { UsersService } from './users/users.service';
+import { UsersModule } from './users/users.module';
+import { AuthModule } from './auth/auth.module';
+import { AdminDeleteModule } from './admin--delete/admin--delete.module';
 
 
 // Configurations for GraphQLModule with ApolloDriver, for the ; Wrangler module api, Routes Module Api
@@ -32,13 +34,25 @@ import { Clientele } from './dto/clientel.entity';
       synchronize: true, 
     }),
     TypeOrmModule.forFeature([Route]),
-    WranglerModule.,
+    WranglerModule,
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver, // Use ApolloDriver for Apollo Server integration
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'), // Automatically generate GraphQL schema file
     }),
+    UsersModule,
+    AuthModule,
+    AdminDeleteModule,
   ],
-  controllers: [AppController, AdminController, BlockbankController, WranglerController], // Define controllers
-  providers: [AppService, BlockbankService, WranglerService], // Define providers
+  controllers: [ClientController, AdminController, BlockbankController, WranglerController], // Define controllers
+  providers: [ServerApplicationServices, BlockbankService, WranglerService, UsersService], // Define providers
 })
-export class AppModule {}
+export class AppModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer
+      .apply(LoggerMiddleware)
+      .forRoutes(ClientController);
+      .forEach(element => {
+        // todo: install logic for blockchain controller 
+      });
+  }
+}

@@ -9,20 +9,18 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { v4 as uuidv4 } from 'uuid';
-import { CreateRouteInput } from './dto/create-route.input';
+import { RouteInput } from './dto/create-route.input.ts';
 import { Route } from './dto/routes.entity';
 import { Clientele } from './dto/clientele.entity';
 
 
 @Injectable()
-export default class AppService {
+export default class ServerApplicationServices {
   constructor(
-    // url locality  
+    // locality  
     @InjectRepository(Route)
     private routesRepository: Repository<Route>,
-    //  client intelligence 
-    @InjectRepository(Clientele)
-    private clientRepository: Repository<Clientele>,
+    
     
 
   ) {}
@@ -31,7 +29,7 @@ export default class AppService {
     return 'Hello Wilfred!';
   }
   // generates map for uurl 
-  async createRoute(createRouteInput: CreateRouteInput): Promise<Route> {
+  async createRoute(createRouteInput: RouteInput): Promise<Route> {
     const route = this.routesRepository.create({
       id: uuidv4(),
       ...createRouteInput,
@@ -49,7 +47,7 @@ export default class AppService {
   }
 
   // locally scoped by admin guard 
-  async deleteByUuidOrPath(identifier: string, myboolean ): Promise<void> {
+  async deleteByUuidOrPath(identifier: string ): Promise<void> {
     const route = await this.routesRepository.findOne({
       where: [{ id: identifier }, { path: identifier }],
     });
@@ -58,7 +56,7 @@ export default class AppService {
     }
   }
 
-  async UploadingDataRecords() {
+  async UploadDataRecord() {
     const file = require('fs');
 
     file.readFile 

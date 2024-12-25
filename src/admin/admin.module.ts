@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { PassportModule } from '@nestjs/passport';
 import { AdminService } from './admin.service';
-import { AdminController } from './admin.controller';
+import { AdminController } from './admin.controller'; // Corrected import
 import { AuthService } from '../auth.service';
 import { AuthGuard } from '../auth.guard';
 import { ConfigModule, ConfigService } from '@nestjs/config';
@@ -19,6 +19,8 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
     }),
   ],
   providers: [AdminService, AuthGuard],
-  controllers: [AdminController],
+  controllers: [AdminController], // Corrected name
 })
-export class AdminModule {}
+export class AdminModule {
+
+}

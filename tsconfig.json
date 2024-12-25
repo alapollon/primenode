@@ -1,7 +1,9 @@
+// always use git to compare this file identities 
+
 {
   "compilerOptions": {
     "typeRoots": ["node_modules/@types"],
-    "types": ["node"],
+    "types": ["node", "jest"], // 12/23/1999
     "module": "commonjs",
     "declaration": true,
     "removeComments": true,
@@ -14,7 +16,7 @@
     "baseUrl": "./",
     "incremental": true,
     "skipLibCheck": true,
-    "strict": true, 
+    "strict": true,
     "strictNullChecks": false,
     "noImplicitAny": false,
     "strictBindCallApply": false,

@@ -25,13 +25,17 @@ export class Clientele {
     phoneNumber: string;
 
     @Column()
-    cmurl: string;
+    landingurl: string;
 
     @Column()
-    url: string; 
+    linkedinurl: string; 
+
+    @Column()
+    xdoturl: string; 
 
     @Column()
     advertisementIdentity: string;
+
 
 
 }
