@@ -1,5 +1,5 @@
 /*
- * This is the AppService class which handles the business logic for the application.
+ * This class instantiates the server services.
  * It includes methods for creating routes, processing MAC addresses, and retrieving routes.
  * The class uses a Map to store routes and provides methods to find all routes or a specific route by ID.
  */
@@ -11,22 +11,22 @@ import { Repository } from 'typeorm';
 import { v4 as uuidv4 } from 'uuid';
 import { RouteInput } from './dto/create-route.input.ts';
 import { Route } from './dto/routes.entity';
+import * as expo from 'express'
 import join from 'path'
 
 
 @Injectable()
-export default class ServerServices {
+export default class ApplicationServices {
   constructor(
     // locality  
     @InjectRepository(Route)
     private routesRepository: Repository<Route>,
-    
-    
+  
 
   ) {}
   // trad
   getHello(): string {
-    return 'Hello Wilfred!';
+    return 'Hello world!';
   }
   // generates map for uurl 
   async createRoute(createRouteInput: RouteInput): Promise<Route> {
@@ -42,7 +42,7 @@ export default class ServerServices {
   }
 
   // find one is for both local and remote mapping 
-  async findOnelink(id: string): Promise<Route> {
+  async findOneElement(id: string): Promise<Route> {
     return this.routesRepository.findOne(id);
   }
 
@@ -56,10 +56,10 @@ export default class ServerServices {
     }
   }
 
-  async UploadDataRecord() {
-    const file = require('fs');
+  async UploadFile () {
+    
 
-    file.readFile 
+    
   }
 
   processMacAddress(macAddress: string): string {

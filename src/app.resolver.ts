@@ -1,6 +1,6 @@
+import ApplicationServices from './app.service';
 import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
 import { UseGuards } from '@nestjs/common';
-import { ApplicationServices } from './app.service';
 
 import { RouteInput } from './dto/create-route.input'; // Define your DTO
 import { Route } from './dto/routes.entity'; // Define your entity
@@ -13,7 +13,10 @@ export class ServiceResolver {
   @Query(() => Route, { name: 'route' })
   @UseGuards(AuthGuard)
   getElementProperties(@Args('id', { type: () => String }) id: string) {
-    return this.Server.findOne(id);
+    return this.Server.findOneElement(id);
   }
+
+  @Query(() => Route, {name: 'route'})
+  @UseGuards(AuthGuard)
 
 }

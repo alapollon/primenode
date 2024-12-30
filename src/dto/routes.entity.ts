@@ -6,10 +6,7 @@ export class Route {
     id: string;
 
     @Column()
-    path: string;
-
-    @Column()
-    filePath: string;
+    Path: string;
     
     @Column()
     method: string;

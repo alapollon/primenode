@@ -2,11 +2,11 @@ import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
 
 
 export class UsersActivityRecord{
-    @Column()
-    who: string;
+    @PrimaryGeneratedColumn()
+    id: string;
 
     @Column()
-    internetProtocoluri: string;
+    keytoken: string;
 
     @Column()
     dateAccessedBy: string;

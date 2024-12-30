@@ -1,13 +1,13 @@
 import { Controller, Get, Post, Body, Param, UploadedFile, UseInterceptors, UseGuards } from '@nestjs/common';
-import AppService from './app.service';
+import ApplicationService from './app.service';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { AuthGuard } from '@nestjs/passport';
 import { Express } from 'express';
 
 @Controller('app')
 @UseGuards(AuthGuard('oauth2'))
-export class ClientController {
-  constructor(private readonly appService: AppService) {
+export class ServerController {
+  constructor(private readonly appService: ApplicationService) {
     
   }
   
@@ -16,7 +16,7 @@ export class ClientController {
   @Get(':id')
   findOne(@Param('id') id: string) {
 
-    return this.appService.findOnelink(id);
+    return this.appService.findOneElement(id);
   }
 
   @Post()

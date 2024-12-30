@@ -21,7 +21,7 @@ export class ContactRecord {
     email: string;
 
     @Column()
-    phoneNumber: string;
+    cellNumber: string;
 
     @Column()
     landingurl: string;
@@ -31,6 +31,9 @@ export class ContactRecord {
 
     @Column()
     xdoturl: string; 
+
+    @Column()
+    facebookurl: string; 
 
     @Column()
     advertisementIdentity: string;

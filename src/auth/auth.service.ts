@@ -1,10 +1,15 @@
+
+import { UsersService } from 'src/users/users.service';
 import { Injectable } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
+import { validate } from 'graphql';
 import { Strategy } from 'passport-oauth2';
 
 @Injectable()
 export class AuthService extends PassportStrategy(Strategy, 'oauth2') {
-  constructor() {
+  constructor(
+    private ProfileType: UsersService
+  ) {
     super({
       authorizationURL: process.env.OAUTH2_AUTHORIZATION_URL,
       tokenURL: process.env.OAUTH2_TOKEN_URL,
@@ -12,6 +17,8 @@ export class AuthService extends PassportStrategy(Strategy, 'oauth2') {
       clientSecret: process.env.OAUTH2_CLIENT_SECRET,
       callbackURL: process.env.OAUTH2_CALLBACK_URL,
     });
+  } validate() {
+
   }
 
 }

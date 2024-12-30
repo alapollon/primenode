@@ -1,21 +1,18 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { UsersService } from './users.service';
 import { getRepositoryToken } from '@nestjs/typeorm';
+import { ContactRecord } from './contact-record.entity';
 import { Repository } from 'typeorm';
-
-// aggregation
-import { ContactRecord } from 'src/dto/contact.entity';
-
-const mockContactRecordRepository = () => ({
-  find: jest.fn(),
-  findOne: jest.fn(),
-  save: jest.fn(),
-  delete: jest.fn(),
-});
 
 describe('UsersService', () => {
   let service: UsersService;
   let contactRecordRepository: Repository<ContactRecord>;
+
+  const mockContactRecordRepository = {
+    save: jest.fn(),
+    find: jest.fn(),
+    delete: jest.fn(),
+  };
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -23,7 +20,7 @@ describe('UsersService', () => {
         UsersService,
         {
           provide: getRepositoryToken(ContactRecord),
-          useFactory: mockContactRecordRepository,
+          useFactory: () => mockContactRecordRepository,
         },
       ],
     }).compile();
@@ -37,16 +34,38 @@ describe('UsersService', () => {
   });
 
   it('should create a contact record', async () => {
-    const contactRecord = { id: '1', name: 'John Doe', email: 'john@example.com', cellphone: '1234567890' };
-    contactRecordRepository.save.mockResolvedValue(contactRecord);
+    const incomingContactRecord = {
+      id: 'mock',
+      name: 'John Doe',
+      email: 'john@example.com',
+      phone: '1234567890',
+      macaddress: '00:1B:44:11:3A:B7',
+      landinurl: 'http://example.com',
+      linkedinurl: 'http://linkedin.com/in/johndoe',
+      xdoturl: 'http://xdot.com/johndoe',
+      advertisementIdentity: 'ad-123',
+    };
+    mockContactRecordRepository.save.mockResolvedValue(incomingContactRecord);
 
-    const result = await service.createContactRecord(contactRecord as ContactRecord);
-    expect(result).toEqual(contactRecord);
+    const result = await service.createContactRecord(incomingContactRecord);
+    expect(result).toEqual(incomingContactRecord);
   });
 
   it('should get all contact records', async () => {
-    const contactRecords = [{ id: '1', name: 'John Doe', email: 'john@example.com', cellphone: '1234567890' }];
-    contactRecordRepository.find.mockResolvedValue(contactRecords);
+    const contactRecords = [
+      {
+        id: '1',
+        name: 'John Doe',
+        email: 'john@example.com',
+        phone: '1234567890',
+        macaddress: '00:1B:44:11:3A:B7',
+        landinurl: 'http://example.com',
+        linkedinurl: 'http://linkedin.com/in/johndoe',
+        xdoturl: 'http://xdot.com/johndoe',
+        advertisementIdentity: 'ad-123',
+      },
+    ];
+    mockContactRecordRepository.find.mockResolvedValue(contactRecords);
 
     const result = await service.getAllContactRecords();
     expect(result).toEqual(contactRecords);
@@ -54,9 +73,9 @@ describe('UsersService', () => {
 
   it('should delete a contact record', async () => {
     const id = '1';
-    contactRecordRepository.delete.mockResolvedValue({ affected: 1 });
+    mockContactRecordRepository.delete.mockResolvedValue({ affected: 1 });
 
-    await service.deleteContactRecord(id);
-    expect(contactRecordRepository.delete).toHaveBeenCalledWith(id);
+    await service.deleteContactByRecords(id);
+    expect(mockContactRecordRepository.delete).toHaveBeenCalledWith({ id });
   });
 });

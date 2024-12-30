@@ -1,4 +1,5 @@
 import { Module } from '@nestjs/common';
+import { TypeOrmModule } from '@nestjs/typeorm';
 import { WranglerService } from './wrangler.service';
 import { WranglerController } from './wrangler.controller';
 import { GraphQLFactory, GraphQLModule } from '@nestjs/graphql'

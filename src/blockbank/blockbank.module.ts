@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common';
-import { BlockbankService } from './blockbank.service';
+import { BlockchainService } from './blockbank.service';
 import { BlockbankController } from './blockbank.controller';
 
 @Module({
-  providers: [BlockbankService],
+  providers: [BlockchainServices],
   controllers: [BlockbankController]
 })
 export class BlockbankModule {}

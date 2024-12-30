@@ -3,23 +3,32 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { ContactRecord } from 'src/dto/contact.entity';
 import { UsersActivityRecord } from 'src/dto/users.entity';
+import { elementAt } from 'rxjs';
+import { profile } from 'console';
 
-export type ContactType = ContactRecord;
 
-@Injectable()
-export class UsersService {
-  profile: {
+
+interface Profile{
     id: string,
+    macaddress: string, 
     name: string,
     email: string,
-    cellphone: string,
-  };
-
-  activity: {
-    id: string,
-    logged: string,
+    phone: string, 
+    landinurl: string,
+    linkedinurl: string 
+    xdoturl: string, 
+    advertisementIdentity: string;
+}
+interface userActivity {
+    keytoken: string;
+    dateAccessed: string, 
     duration: string,
-  }
+    BrowserDepiction: string,
+    DeviceType: string, 
+
+}
+@Injectable()
+export class UsersService {
 
   constructor(
     @InjectRepository(ContactRecord)
@@ -29,41 +38,23 @@ export class UsersService {
     private usersActivityRepository: Repository<UsersActivityRecord>
   ) {}
 
-  async createContactRecord(contactRecord: ContactRecord): Promise<ContactRecord> {
+  async createContactRecord(contactRecord: Profile): Promise<ContactRecord> {
     // Store in SQL database
     const capturedContactRecord = await this.contactsRepository.save(contactRecord);
     return capturedContactRecord;
   }
 
-  getIndividualContactRecord( ): ContactRecord {
-
-    return this.contactsRepository;
+  async getIndividualContactRecord(contactRecordID: string): Promise<ContactRecord> {
+    const profile = await this.contactsRepository.findOne({ where: { id: contactRecordID } });
+    if (!profile) {
+      throw new Error('Contact record not found');
+    }
+    return profile;
   }
 
-  async getAllContactRecord(): Promise<ContactRecord> {
-
-    return this.contactsRepository.find();
-  }
-
-  async deleteContactRecord(id: string): Promise<void> {
-    // Remove from local repository
-     let person = this.contactsRepository.filter(ContactRecord => ContactRecord.id !== id);
-
-    // Remove from SQL database
-    if(person === id){await this.contactsRepository.delete(id);}else{
-        return 1 }
-    
-  }
-  // return clocking from metalandr 
-  async updateUserActivity(id: string, duration: string, BrowserDepiction: string) : Promise<void> {
-         do{
-           
-         }while()
-    return(
-        this.activity.id = await this.contactsRepository.filter(), 
-        this.activity.logged = await this.contactsRepository.filter(
-        this.activity.duration = await this.contactsRepository.filter()
-        ) 
-            
+  async getAllContactRecords(): Promise<ContactRecord[]> {
+    return await this.contactsRepository.find();
   }
 }
+
+export { Profile, userActivity }

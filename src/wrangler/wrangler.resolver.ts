@@ -1,6 +1,6 @@
 import { Resolver, Mutation, Args } from '@nestjs/graphql';
-import { CreateAssetInput } from './dto/create-asset.input';
-import { Asset } from './entities/asset.entity';
+import { CreateAssetInput } from './create-asset.input';
+import { Asset } from '../dto/asset.entity';
 import { WranglerService } from './wrangler.service';
 import { FileUpload } from 'graphql-upload';
 
