@@ -9,61 +9,50 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { v4 as uuidv4 } from 'uuid';
-import { RouteInput } from './dto/create-route.input.ts';
-import { Route } from './dto/routes.entity';
+import { RouteInput } from './dto/create-route.input';
+import { Express } from 'express';
+import { Multer} from 'multer'
+import * as fs from 'path';
 import * as expo from 'express'
 import join from 'path'
 
+import { FileService } from './services/file.sevice';
+import { MulterOptionsFactory, MulterModuleOptions } from '@nestjs/platform-express';
+import { FileStore } from './dto/file.entity';
+
 
 @Injectable()
-export default class ApplicationServices {
+export class AppService {
   constructor(
-    // locality  
-    @InjectRepository(Route)
-    private routesRepository: Repository<Route>,
-  
-
+    @InjectRepository(RouteInput, )
+    private routesRepository: Repository<RouteInput>,
+    private fileTable: Repository<FileStore>,
+    private fileService: FileService,
   ) {}
-  // trad
-  getHello(): string {
-    return 'Hello world!';
-  }
-  // generates map for uurl 
-  async createRoute(createRouteInput: RouteInput): Promise<Route> {
-    const route = this.routesRepository.create({
-      id: uuidv4(),
-      ...createRouteInput,
-    });
-    return (await this.routesRepository.save(route))[0];
-  }
-  // find all function is only for local non-sql maps
-  async findAll(): Promise<Route[]> {
-    return this.routesRepository.find();
+
+  private getFilePath(req: any): string {
+    // Customize the upload path based on request parameters or other logic
+    const directory = req.body.directory || 'default';
+    return `./uploads/${directory}`;
   }
 
-  // find one is for both local and remote mapping 
-  async findOneElement(id: string): Promise<Route> {
-    return this.routesRepository.findOne(id);
+  async uploadFile(file: Express.Multer.File): Promise<any> {
+    return this.fileService.uploadFile(file);
   }
 
-  // locally scoped by admin guard 
-  async deleteByUuidOrPath(identifier: string ): Promise<void> {
-    const route = await this.routesRepository.findOne({
-      where: [{ id: identifier }, { path: identifier }],
-    });
-    if (route) {
-      await this.routesRepository.remove(route);
+  async downloadFile(filename: string): Promise<any> {
+    // return files into buffer by name or uuid
+    return this.fileService.downloadFile(filename);
+  } 
+  async propUpContent(): Promise<any> {
+
+  }
+
+  getHello(name: string): string {
+    if (!name) {
+      return 'Hello World!';
+    } else {
+      return 'Hello ' + name;
     }
-  }
-
-  async UploadFile () {
-    
-
-    
-  }
-
-  processMacAddress(macAddress: string): string {
-    // Add any processing logic here
-    return `Processed MAC address: ${macAddress}`;
   }
 }

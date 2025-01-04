@@ -2,7 +2,7 @@ import * as session from 'express-session';
 
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { LoggingInterceptor } from './logger.interceptor';
+import { LoggingInterceptor } from './interceptors/logger.interceptor';
 
 async function bootstrap() {
   const httpsOptions = {

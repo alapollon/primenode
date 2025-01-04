@@ -1,33 +1,34 @@
 import { Controller, Get, Post, Body, Param, UploadedFile, UseInterceptors, UseGuards } from '@nestjs/common';
-import ApplicationService from './app.service';
+import {AppService} from './app.service';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { AuthGuard } from '@nestjs/passport';
 import { Express } from 'express';
 
 @Controller('app')
 @UseGuards(AuthGuard('oauth2'))
-export class ServerController {
-  constructor(private readonly appService: ApplicationService) {
+export class AppController {
+  constructor(private readonly appService: AppService) {
     
   }
-  
-
-  // findone provoke graphql mutated responses 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-
-    return this.appService.findOneElement(id);
+  //
+  @Get('greeting')
+  Hello(){
+      return this.appService.getHello('user')
   }
+  // 
+  @Get('id')
+  fetchElementAttributes(@Param('id') id: string): Promise<string>  {
 
-  @Post()
-  create(@Body() createRouteDto: any) {
-    return this.appService.createRoute(createRouteDto);
+    return this.appService.propUpContent();
   }
-
-  @Post('upload')
+  //
+  //
+  @Post('download')
   @UseInterceptors(FileInterceptor('file'))
-  uploadFile(@UploadedFile() file: Express.Multer.File): void {
-    console.log('uploading ' + file);
+  upstream(@UploadedFile() file: Express.Multer.File): Promise<void> {
+
+    console.log('upsteam ' + file);
     // Add your logic here
+    return null
   }
 }

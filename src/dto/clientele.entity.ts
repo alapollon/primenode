@@ -1,16 +1,17 @@
 import { Column, Entity,  } from "typeorm";
 
 export default class ClienteleRecord {
-    @Column
+    @Column()
     macaddress: string;
 
-    @Column
+    @Column()
     IPorigin: string;
 
-    @Column
+    @Column()
     IPdestination: string;
 
-    @Column 
-    locationOrigin: string; 
+    @Column() 
+    Zone: string; 
+
     
 }

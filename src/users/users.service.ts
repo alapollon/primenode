@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Scope } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { ContactRecord } from 'src/dto/contact.entity';
@@ -38,10 +38,13 @@ export class UsersService {
     private usersActivityRepository: Repository<UsersActivityRecord>
   ) {}
 
-  async createContactRecord(contactRecord: Profile): Promise<ContactRecord> {
+  async createContactRecord(contactRecord): Promise<ContactRecord> {
     // Store in SQL database
-    const capturedContactRecord = await this.contactsRepository.save(contactRecord);
-    return capturedContactRecord;
+    const record = contactRecord
+    try{ await this.contactsRepository.save(contactRecord); return record }catch{
+
+    }
+    
   }
 
   async getIndividualContactRecord(contactRecordID: string): Promise<ContactRecord> {
@@ -55,6 +58,14 @@ export class UsersService {
   async getAllContactRecords(): Promise<ContactRecord[]> {
     return await this.contactsRepository.find();
   }
+
+  async deleteContactByRecords(contactRecordID: string): Promise<void> {
+    await this.contactsRepository.delete(contactRecordID); 
+  }
+  async setContactPassword(): Promise<void> {
+
+  }
+  async 
 }
 
 export { Profile, userActivity }
