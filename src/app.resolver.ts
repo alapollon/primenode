@@ -7,7 +7,7 @@ import { Content } from 'cloudflare/resources/snippets/content';
 
 
 @Resolver(() => Content, )
-export class ServiceResolver {
+export class AppResolver {
   constructor(private readonly Server: ApplicationServices) {}
 
   @Query(() => Content, {  })
