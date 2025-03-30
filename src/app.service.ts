@@ -9,13 +9,9 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { v4 as uuidv4 } from 'uuid';
-import { RouteInput } from './dto/create-route.input';
 import { Express } from 'express';
-import { Multer} from 'multer'
-import * as fs from 'path';
-import * as expo from 'express'
-import join from 'path'
 
+import { createReadStream, promises as fsPromises } from 'fs';
 import { FileService } from './services/file.sevice';
 import { MulterOptionsFactory, MulterModuleOptions } from '@nestjs/platform-express';
 import { FileStore } from './dto/file.entity';
@@ -24,8 +20,7 @@ import { FileStore } from './dto/file.entity';
 @Injectable()
 export class AppService {
   constructor(
-    @InjectRepository(RouteInput, )
-    private routesRepository: Repository<RouteInput>,
+    @InjectRepository( )
     private fileTable: Repository<FileStore>,
     private fileService: FileService,
   ) {}
@@ -54,5 +49,16 @@ export class AppService {
     } else {
       return 'Hello ' + name;
     }
+  }
+  customMessage(
+    statusCode: number,
+    message: string,
+    data = {},
+  ): responseMessageInterface {
+    return {
+      statusCode: statusCode,
+      message: [message],
+      data: data,
+    };
   }
 }

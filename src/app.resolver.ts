@@ -5,6 +5,14 @@ import { RouteInput } from './dto/create-route.input'; // Define your DTO
 import { Route } from './dto/routes.entity'; // Define your entity
 import { Content } from 'cloudflare/resources/snippets/content';
 
+/**
+ * 
+ * Resolvers provide the instructions for turning a GraphQL operation (a query, mutation, or subscription) into data. 
+ * They return the same shape of data we specify in our schema -- either synchronously or as a promise that resolves to a result of that shape. 
+ * Typically, you create a resolver map manually.
+ */
+
+
 
 @Resolver(() => Content, )
 export class AppResolver {
