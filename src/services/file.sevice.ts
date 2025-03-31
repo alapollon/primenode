@@ -30,6 +30,9 @@ export class FileService implements MulterOptionsFactory {
       return 0
     }
   } 
+  recordEvent() {
+    return 0 
+  } 
   createMulterOptions(): MulterModuleOptions {
     return {
       storage: diskStorage({
