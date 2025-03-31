@@ -7,13 +7,11 @@ import { Repository } from 'typeorm';
 
 import { Express } from 'express';
 import { diskStorage, Multer} from 'multer'
-import * as fs from 'path';
+
 import { safeFile } from './exports/hygine'
-import * as fs from 'path';
 
-import { createReadStream, promises as fsPromises } from 'fs';
-
-import { FileStore } from 'src/dto/file.entity';
+import { createReadStream, promises as fsPromises, existsSync, opendirSync as dir } from 'fs';
+import { FileStore } from 'src/dto/file.entity;
 
 
 @Injectable( {} )
@@ -27,6 +25,10 @@ export class FileService implements MulterOptionsFactory {
 
   ) {
     // properties of this void 
+
+    async amendLogRecord(){
+      return 0
+    }
   } 
   createMulterOptions(): MulterModuleOptions {
     return {
@@ -48,7 +50,6 @@ export class FileService implements MulterOptionsFactory {
     const directory = req.body.directory || 'default';
     return `./uploads/${directory}`;
   }
-
   async uploadFile(file: Express.Multer.File): Promise<string> {
     const uploadPath = fs.join(__dirname, '..', 'uploads', file.originalname);
     const sanisanitizedFilename = safeFile(file.originalname)
@@ -65,5 +66,6 @@ export class FileService implements MulterOptionsFactory {
       throw new HttpException('File not found', HttpStatus.NOT_FOUND);
     }
   }
+
   
 }
