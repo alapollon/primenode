@@ -4,8 +4,7 @@ import { Injectable, HttpException, HttpStatus, Scope } from '@nestjs/common';
 import { MulterOptionsFactory, MulterModuleOptions } from '@nestjs/platform-express';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-
-import { Express } from 'express';
+import * from 'bycrpt'; 
 import { diskStorage, Multer} from 'multer'
 
 import { safeFile } from './exports/hygine'
@@ -27,7 +26,11 @@ export class FileService implements MulterOptionsFactory {
     // properties of this void 
 
     async amendLogRecord(){
-      return 0
+      
+      // if not open another 
+      return (
+        //
+      )
     }
   } 
   recordEvent() {
