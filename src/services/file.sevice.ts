@@ -1,16 +1,30 @@
 
-
+//
 import { Injectable, HttpException, HttpStatus, Scope } from '@nestjs/common';
+
+//
 import { MulterOptionsFactory, MulterModuleOptions } from '@nestjs/platform-express';
+
+//
 import { InjectRepository } from '@nestjs/typeorm';
+
+//
 import { Repository } from 'typeorm';
-import * from 'bycrpt'; 
+
+//
+import * as bycrpt from 'bycrpt'; 
+
+//
 import { diskStorage, Multer} from 'multer'
 
+//
 import { safeFile } from './exports/hygine'
 
+//
 import { createReadStream, promises as fsPromises, existsSync, opendirSync as dir } from 'fs';
-import { FileStore } from 'src/dto/file.entity;
+
+//
+import { FileStore } from 'src/dto/file.entity'; 
 
 
 @Injectable( {} )
@@ -24,14 +38,7 @@ export class FileService implements MulterOptionsFactory {
 
   ) {
     // properties of this void 
-
-    async amendLogRecord(){
-      
-      // if not open another 
-      return (
-        //
-      )
-    }
+      // binary search 
   } 
   recordEvent() {
     return 0 
