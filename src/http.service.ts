@@ -2,24 +2,29 @@
 
 
 // 
+import {} from '@nestjs/common'; 
 
 
-
-/** */
+/** 
+ * this class aggregate headers and filters--
+ *  expectancy 
+ * 
+*/
 
 
  
 
 export class HttpFilterServices {
 
-    // ingest incoming headers 
+    // ingest  
     constructor () {
+        /** local bucket */
 
 
     }
     customMessage(
         statusCode: number,
-        message: string,
+        message: string /**  */,
         data = {},
         // 
       ): responseMessageInterface {
