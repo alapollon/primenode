@@ -1,6 +1,7 @@
 import * as session from 'express-session';
-
 import { NestFactory } from '@nestjs/core';
+import { register } from '@react-ssr/nestjs-express';
+import { NestExpressApplication } from '@nestjs/platform-express';
 import { AppModule } from './app.module';
 import { LoggingInterceptor } from './interceptors/logger.interceptor';
 
@@ -17,8 +18,10 @@ async function bootstrap() {
       saveUninitialized: false 
     }),
     httpsOptions,
-    LoggingInterceptor
+    LoggingInterceptor,
+
   );
   await app.listen(process.env.PORT ?? 3020);
+  await register(Index)
 }
 bootstrap();
