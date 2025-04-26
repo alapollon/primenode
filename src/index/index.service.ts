@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
+import {} from
 
-@Injectable() export class IndexService {
+@Injectable({scope: Request }) export class IndexService {
     constructor(){} 
 
 }
